@@ -2,6 +2,7 @@ package com.ms.user.services;
 
 import com.ms.user.dtos.UserRequestDTO;
 import com.ms.user.dtos.UserResponseDTO;
+import com.ms.user.entities.UserEntity;
 import com.ms.user.enums.UserStatus;
 import com.ms.user.exceptions.NotFoundException;
 import com.ms.user.exceptions.ValidException;
@@ -13,7 +14,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +50,27 @@ public class UserService {
                 userRepository.findByUserId(userId)
                         .orElseThrow(() -> new NotFoundException("User not found"))
         );
+    }
+
+    public UserResponseDTO updateUser(UserRequestDTO userRequestDTO, UUID userId) {
+        UserResponseDTO userResponseDTO = findUser(userId);
+
+        if (userResponseDTO.userStatus() == UserStatus.INACTIVE) {
+            throw new ValidException("User is already inactive");
+        }
+
+        // Closure
+        Function<UserEntity, UserEntity> updateUserFunction = user -> {
+            user.setName(userRequestDTO.name());
+            user.setUpdated(LocalDateTime.now());
+            return userRepository.save(user);
+        };
+
+        // Função de alta ordem
+        userRepository.findById(userId)
+                .ifPresent(updateUserFunction::apply);
+
+        return findUser(userId);
     }
 
     public UserResponseDTO deactivateUser(UUID userId) {

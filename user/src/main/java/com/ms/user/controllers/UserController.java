@@ -37,7 +37,6 @@ public class UserController {
         return ResponseEntity.ok(userService.findAllUsers(pageable));
     }
 
-    // Criar updateUser - David Matheus
     @PutMapping("/update/{userId}")
     public ResponseEntity<UserResponseDTO> updateUser(@RequestBody UserRequestDTO userRequestDTO, @PathVariable("userId") UUID userId) {
         return ResponseEntity.ok(userService.updateUser(userRequestDTO, userId));
