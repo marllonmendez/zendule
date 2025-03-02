@@ -2,6 +2,7 @@ package com.ms.user.services;
 
 import com.ms.user.dtos.UserRequestDTO;
 import com.ms.user.dtos.UserResponseDTO;
+import com.ms.user.enums.UserStatus;
 import com.ms.user.exceptions.NotFoundException;
 import com.ms.user.exceptions.ValidException;
 import com.ms.user.mappers.UserMapper;
@@ -46,6 +47,22 @@ public class UserService {
                 userRepository.findByUserId(userId)
                         .orElseThrow(() -> new NotFoundException("User not found"))
         );
+    }
+
+    public UserResponseDTO deactivateUser(UUID userId) {
+        UserResponseDTO userResponseDTO = findUser(userId);
+
+        if (userResponseDTO.userStatus() == UserStatus.INACTIVE) {
+            throw new ValidException("User is already inactive");
+        }
+
+        userRepository.findById(userId)
+                .ifPresent(user -> {
+                    user.setUserStatus(UserStatus.INACTIVE);
+                    userRepository.save(user);
+                });
+
+        return findUser(userId);
     }
 
 }

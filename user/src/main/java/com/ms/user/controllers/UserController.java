@@ -43,7 +43,6 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(userRequestDTO, userId));
     }
 
-    // Criar deactivateUser - Daniela Brito
     @DeleteMapping("deactivate/{userId}")
     public ResponseEntity<UserResponseDTO> deactivateUser(@PathVariable("userId") UUID userId) {
         return ResponseEntity.ok(userService.deactivateUser(userId));
