@@ -25,13 +25,11 @@ public class UserController {
         return ResponseEntity.ok(userService.createUser(userRequestDTO));
     }
 
-
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponseDTO> findUser(@PathVariable("userId") UUID userId) {
         return ResponseEntity.ok(userService.findUser(userId));
     }
 
-    // Criar findAllUsers - Gean Ribeiro
     @GetMapping("/all")
     public ResponseEntity<Page<UserResponseDTO>> findAllUsers(@PageableDefault(size = 10, sort = {"name"}) Pageable pageable) {
         return ResponseEntity.ok(userService.findAllUsers(pageable));

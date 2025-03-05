@@ -12,9 +12,13 @@ import com.ms.user.repositories.UserRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -50,6 +54,18 @@ public class UserService {
                 userRepository.findByUserId(userId)
                         .orElseThrow(() -> new NotFoundException("User not found"))
         );
+    }
+
+    public Page<UserResponseDTO> findAllUsers(Pageable pageable) {
+        Page<UserEntity> users = userRepository.findAll(pageable);
+
+        // List Comprehension(Stream API)
+        List<UserResponseDTO> list = users.stream()
+                .filter(user -> user.getUserStatus() == UserStatus.ACTIVE)
+                .map(userMapper::toDTO)
+                .toList();
+
+        return new PageImpl<>(list, pageable, list.size());
     }
 
     public UserResponseDTO updateUser(UserRequestDTO userRequestDTO, UUID userId) {
