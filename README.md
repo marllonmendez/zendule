@@ -32,7 +32,7 @@ spring.datasource.password=sua_senha
 spring.rabbitmq.addresses=url_cloudAMQP
 ```
 
-### 3. [App Password Google - Clique aqui](https://www.youtube.com/watch?v=A6lASY-Yu-I&t=2s)
+### 3. 📺 [App Password Google - Clique aqui](https://www.youtube.com/watch?v=A6lASY-Yu-I&t=2s)
 O Gmail exige uma senha específica de aplicativo para permitir o envio de e-mails via SMTP em aplicações externas.
 Este vídeo ensina como gerar essa senha utilizando sua conta Google com autenticação em duas etapas
 ```
@@ -42,17 +42,17 @@ spring.mail.password=sua_app_password
 
 ## 💻 Execução dos Microsserviços
 
-### 1. Clone o projeto
+### 1. 🧬 Clone o projeto
 ```
 https://github.com/marllonmendez/zendule.git
 ```
 
-### 2. Instale as dependências e compile
+### 2. 🧱 Instale as dependências e compile
 ```
 mvn clean install
 ```
 
-### 3. Execute a aplicação Spring Boot
+### 3. 🚀 Execute a aplicação Spring Boot
 ```
 mvn spring-boot:run
 ```
@@ -75,3 +75,9 @@ Se tudo estiver configurado corretamente, você deverá receber um e-mail de boa
 
 ### Documentação no Swagger
 ![Swagger](/assets/swagger.png)
+
+## 👥 Equipe
+- [Marlon Mendes](https://github.com/marllonmendez)
+- [Daniella Brito](https://github.com/daniellabritto)
+- [David Matheus](https://github.com/davidmatheusk)
+- [Gean Ribeiro](https://github.com/Rayleigh48)
