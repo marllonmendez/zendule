@@ -4,6 +4,7 @@ import com.ms.user.dtos.UserRequestDTO;
 import com.ms.user.dtos.UserResponseDTO;
 import com.ms.user.services.UserService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "user")
 public class UserController {
 
     private final UserService userService;
@@ -31,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Page<UserResponseDTO>> findAllUsers(@PageableDefault(size = 10, sort = {"name"}) Pageable pageable) {
+    public ResponseEntity<Page<UserResponseDTO>> findAllUsers(@PageableDefault(sort = {"name"}) Pageable pageable) {
         return ResponseEntity.ok(userService.findAllUsers(pageable));
     }
 

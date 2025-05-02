@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.ms</groupId>
 	<artifactId>email</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>email</name>
 	<description>email service</description>
 	<url/>
@@ -59,13 +59,12 @@
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
-			<version>1.5.5.Final</version>
+			<version>1.6.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct-processor</artifactId>
-			<version>1.5.5.Final</version>
-			<scope>provided</scope>
+			<version>1.6.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>

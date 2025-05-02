@@ -5,10 +5,9 @@ import com.ms.email.entities.EmailEntity;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 
-import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
-
-@Mapper(componentModel = SPRING)
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface EmailMapper {
 
     @Mapping(source = "userId", target = "userId")

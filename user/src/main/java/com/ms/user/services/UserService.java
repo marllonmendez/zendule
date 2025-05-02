@@ -13,12 +13,10 @@ import com.ms.user.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -32,7 +30,6 @@ public class UserService {
 
     @Transactional
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
-        // Função Lambda
         userRepository.findByEmail(userRequestDTO.email())
                 .ifPresent(user -> {
                     throw new ValidException("User already exists");
@@ -57,15 +54,8 @@ public class UserService {
     }
 
     public Page<UserResponseDTO> findAllUsers(Pageable pageable) {
-        Page<UserEntity> users = userRepository.findAll(pageable);
-
-        // List Comprehension(Stream API)
-        List<UserResponseDTO> list = users.stream()
-                .filter(user -> user.getUserStatus() == UserStatus.ACTIVE)
-                .map(userMapper::toDTO)
-                .toList();
-
-        return new PageImpl<>(list, pageable, list.size());
+        Page<UserEntity> users = userRepository.findAllByUserStatus(UserStatus.ACTIVE, pageable);
+        return users.map(userMapper::toDTO);
     }
 
     public UserResponseDTO updateUser(UserRequestDTO userRequestDTO, UUID userId) {
@@ -75,14 +65,12 @@ public class UserService {
             throw new ValidException("User is already inactive");
         }
 
-        // Closure
         Function<UserEntity, UserEntity> updateUserFunction = user -> {
             user.setName(userRequestDTO.name());
             user.setUpdated(LocalDateTime.now());
             return userRepository.save(user);
         };
 
-        // Função de alta ordem
         userRepository.findById(userId)
                 .ifPresent(updateUserFunction::apply);
 
