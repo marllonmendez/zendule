@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Criar Usuário</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        form {
+            max-width: 500px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        input {
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 1em;
+            width: 20rem;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 1em;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .response {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Criar Novo Usuário</h2>
+
+<form id="userForm">
+    <input type="text" id="name" name="name" placeholder="Nome" required />
+    <input type="email" id="email" name="email" placeholder="Email" required />
+    <button type="submit">Enviar</button>
+</form>
+
+<div class="response" id="response"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    const form = document.getElementById('userForm');
+    const responseDiv = document.getElementById('response');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+
+        try {
+            const response = await axios.post('http://localhost:8081/create', {
+                name,
+                email
+            });
+
+            responseDiv.innerHTML = `<p style="color:green">Usuário criado com sucesso!</p>`;
+            form.reset();
+        } catch (error) {
+            console.error(error);
+            const message = error.response?.data?.message || 'Erro ao criar usuário.';
+            responseDiv.innerHTML = `<p style="color:red">${message}</p>`;
+        }
+    });
+</script>
+
+</body>
+</html>

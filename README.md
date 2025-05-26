@@ -67,6 +67,10 @@ Se tudo estiver configurado corretamente, você deverá receber um e-mail de boa
 
 ## 📷 Evidências
 
+### Front-end
+![Email Service](/assets/usuario-cadastro.png)
+![Email Service](/assets/usuario-criado.png)
+
 ### [Email Service](email) recebendo dados de [User Service](user)
 ![Email Service](/assets/email-service.png)
 
